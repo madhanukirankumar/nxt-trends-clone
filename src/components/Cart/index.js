@@ -1,3 +1,7 @@
+import React from 'react'
+
+import Popup from 'reactjs-popup'
+
 import Header from '../Header'
 import CartListView from '../CartListView'
 
@@ -25,6 +29,30 @@ const Cart = () => (
         removeAllCartItems()
       }
 
+      const onConfirmOrder = () => {}
+
+      const onCheckOut = () => {
+        console.log('========')
+        return (
+          <Popup
+            modal
+            trigger={open => (
+              <button className="button">
+                Trigger - {open ? 'Opened' : 'Closed'}
+              </button>
+            )}
+            position="right center"
+            closeOnDocumentClick
+          >
+            <span> Popup content </span>
+          </Popup>
+        )
+      }
+
+      // <p>Your order has been placed successfully</p>
+      // <p>{tempTotalAmount}</p>
+      // <p>{cartListLen}</p>
+
       return (
         <>
           <Header />
@@ -38,7 +66,32 @@ const Cart = () => (
                 <CartListView />
                 <h1>Order Total: Rs {tempTotalAmount}/-</h1>
                 <p>{cartListLen} Items in cart</p>
-                <button>Checkout</button>
+
+                <Popup
+                  modal
+                  trigger={open => <button className="button">Checkout</button>}
+                  position="right center"
+                  closeOnDocumentClick
+                >
+                  <div className="pop-up">
+                    <label htmlFor="sell">Select Payment Method:</label>
+                    <select id="sell" className="indi">
+                      <option disabled={true}>Card</option>
+                      <option disabled={true}>Net Banking</option>
+                      <option disabled={true}>UPI</option>
+                      <option disabled={true}>Wallet</option>
+                      <option disabled={false}>Cash on Delivery</option>
+                    </select>
+                    <p className="para1">
+                      <span className="summ">Summary:</span>
+                      No.of items: {cartListLen} <br />
+                      Total Bill Amount: {tempTotalAmount}
+                    </p>
+                    <button className="indi" onClick={onConfirmOrder}>
+                      Confirm Order
+                    </button>
+                  </div>
+                </Popup>
                 {/* TODO: Add your code for Cart Summary here */}
               </div>
             )}
